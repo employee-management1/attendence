@@ -6,6 +6,7 @@ const leaveModel = require('./leave');
 const noticeModel = require('./notice');
 const taskModel = require('./tasks');
 const attendenceModel = require('./attendence');
+const moment = require('moment-timezone');
 
 const projectModel = require('./project');
 passport.use(new localStrategy(employeeModel.authenticate()));
@@ -301,10 +302,12 @@ async function record_attendence(req, res, next) {
   let year = date.getFullYear();
   let currentDate = `${day}-${month}-${year}`;
 
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-  let currentTime = `${hours}:${minutes}:${seconds}`;
+  // let hours = date.getHours();
+  // let minutes = date.getMinutes();
+  // let seconds = date.getSeconds();
+  // let currentTime = `${hours}:${minutes}:${seconds}`;
+
+  const currentTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
 
   const employee = await employeeModel.findOne({ username: req.session.passport.user });
   const attendence = await attendenceModel.create({
@@ -326,11 +329,12 @@ async function record_logout(req, res, next) {
   let year = date.getFullYear();
   let currentDate = `${day}-${month}-${year}`;
 
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-  let currentTime = `${hours}:${minutes}:${seconds}`;
+  // let hours = date.getHours();
+  // let minutes = date.getMinutes();
+  // let seconds = date.getSeconds();
+  // let currentTime = `${hours}:${minutes}:${seconds}`;
 
+  const currentTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
 
   const employee = await employeeModel.findOne({ username: req.session.passport.user }).populate("attendence");
   const update = employee.attendence[employee.attendence.length - 1];
