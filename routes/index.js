@@ -369,7 +369,7 @@ router.post("/login", async function (req, res, next) {
   //successRedirect: "/profile",
   failureRedirect: "/",
 }),
-  getPublicIp,
+  // getPublicIp,
   record_attendence,
   function (req, res) {
     res.redirect('/profile')
