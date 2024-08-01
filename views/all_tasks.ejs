@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: rgb(232, 236, 239);
+            font-family: 'Gilroy';
+            margin: 20px;
+        }
+        .btn2{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(221, 149, 149);
+}
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+        <h2>All Tasks :</h2>
+        <a class="btn2" href="/profile">Profile</a>
+    </div>
+    <div class="wrapper" style="font-size: small;">
+        <div class="each"
+            style="display: grid; grid-template-columns: repeat(8, 1fr);">
+            <h2>Task Id</h2>
+            <h2>Name</h2>
+            <h2>Start Date</h2>
+            <h2>End Date</h2>
+            <h2>Employee</h2>
+            <h2>Project</h2>
+            <h2>Status</h2>
+            <h2>Update</h2>
+        </div>
+        <hr>
+        <% tasks.forEach((task)=> {%>
+            <div class="each5" style="display: grid; grid-template-columns: repeat(8, 1fr);">
+                <h2 id="task_number">
+                    <%= task.taskNumber %>
+                </h2>
+                <h2>
+                    <%= task.taskName %>
+                </h2>
+                <h2>
+                    <%= task.taskStartDate %>
+                </h2>
+                <h2>
+                    <%= task.taskEndDate %>
+                </h2>
+                <h2>
+                    <%= task.employeeName %>
+                </h2>
+                <h2>
+                    <%= task.project ? task.project.projectName : 'N/A' %>
+                </h2>
+                <h2>
+                    <%= task.status %>
+                </h2>
+                <h2>
+                    <button class="delete_button5">Delete</button>
+                </h2>
+            </div>
+            <%})%>
+
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete_button5').forEach(button => {
+        button.addEventListener('click', function() {
+            
+            var parentDiv = this.closest('.each5');
+            var id = parentDiv.querySelector('#task_number').innerText;
+            alert('Data updated successfully');
+          
+           
+            fetch('/updateTasks', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id})
+              })
+              .then(response => {
+                if(response.ok){
+                    alert("Data sent")
+                }
+              })
+              .then(result => {
+                if (result.success) {
+                  alert('Data updated successfully');
+                 
+                } else {
+                  alert('Error updating data');
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              })
+              window.location.reload();
+          });
+      });
+    });
+        </script>
+</body>
+
+</html>

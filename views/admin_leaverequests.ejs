@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/admin_leaverequests.css">
+    <script src="../javascripts/index.js"></script>
+    <style>
+        .btn2{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(221, 149, 149);
+}
+    </style>
+</head>
+
+<body>
+    <div id="wrappper">
+        <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+            <h2>Leave Requests :</h2>
+            <a class="btn2" href="/profile">Profile</a>
+        </div>
+        <!-- <a href="/logout" >Logout</a> -->
+        
+        <div class="leaves">
+            <h3>Leave Id</h3>
+            <h3>Start Date</h3>
+            <h3>End Date</h3>
+            <h3>Reason</h3>
+            <h3>Employee</h3>
+            <h3>C_Status</h3>
+            <h3>Status</h3>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class="all_leaves">
+            <% leaves.forEach((leave)=>{ %>
+                <div class="leaves">
+                    <h3>
+                        <%= leave.leaveNumber %>
+                    </h3>   
+                    <h3>
+                        <%= leave.startDate %>
+                    </h3>   
+                    <h3>
+                        <%= leave.enddate %>
+                    </h3>
+                    <h3>
+                        <%= leave.Reason %>
+                    </h3>
+                    <h3 id="username">
+                        <%= leave.employeeName %>
+                    </h3>
+                    <h3>
+                        <%= leave.status %>
+                    </h3>
+                    <div id="leave-status" data-id="leave_status">
+                        <select name="department" id="department">
+                            <option value="Submitted">Submitted</option>
+                            <option value="Partially-Accepted">Partially Accepted</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
+                    </select>
+                    <button class="save_button">Save</button>
+                    </div>
+                </div>
+                
+                <% })%>
+        </div>
+    </div>           
+        
+</body>
+
+</html>

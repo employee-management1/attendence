@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/tasks.css">
+</head>
+
+<body>
+    <div class="wrapper">
+
+
+        <form action="/newTask" method="post">
+            <div class="form">
+                <div class="inner">
+                    <label for="taskName">Task Name :</label>
+                    <input type="text" name="taskName">
+                </div>
+                <div class="inner">
+                    <label for="startDate">Task Start Date :</label>
+                    <input type="date" name="startDate">
+                </div>
+                <div class="inner">
+                    <label for="endDate" name="endDate">Task End Date :</label>
+                    <input type="date" name="endDate">
+                </div>
+                <div class="inner">
+                    <label for="priority">Priority:</label>
+                    <select name="priority" id="priority">
+                        <option value="">Select Priority</option>
+                        <option value="high">High</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+
+                <div class="inner">
+                    <label for="project">Project :</label>
+                    <select id="project" name="project" onchange="printVal()">
+                        <option value="">Choose project</option>
+                        <% projects.forEach((project)=>{ %>
+                            <option>
+                                <%= project.projectName %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+                <!-- <div class="inner">
+                    <label for="employee">Employee :</label>
+                    <select id="employeeName" name="employeeName">
+                        <% employees.forEach((employee)=>{ %>
+                            <option>
+                                <%= employee.username %>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div> -->
+
+                <div id="membersList"></div>
+            </div>
+            <div>
+                <button class="submit">
+                    <div style="font-family: Gilroy; font-size: large;">Assign task</div>
+                </button>
+            </div>
+            <div style="margin-top: 10px;">
+                <a href="/profile">Back</a>
+            </div>
+
+
+
+        </form>
+    </div>
+
+    <script>
+        function printVal() {
+            let project = document.getElementById("project").value;
+            console.log('Project value:', project);
+
+            fetch('http://localhost:3000/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ project: project })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Ensure JSON parsing
+                })
+                .then(data => {
+                    displayMembers(data.members);
+                
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function displayMembers(members) {
+            const membersList = document.getElementById('membersList');
+            membersList.innerHTML = ''; // Clear any existing content
+
+            if (members && members.length > 0) {
+                let select = document.createElement('select');
+                select.id = 'employeeName';
+                select.name = 'employeeName';
+                members.forEach(member => {
+                    let option = document.createElement('option');
+                    option.value = member;
+                    option.textContent = member;
+                    select.appendChild(option);
+                });
+                membersList.appendChild(select);
+            } else {
+                membersList.textContent = 'No members available';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

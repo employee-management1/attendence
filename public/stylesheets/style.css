@@ -1,0 +1,24 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: scroll;
+}
+
+
+.hello{
+  color: aqua;
+}
+
+.leave-form{
+  display: flex;
+  flex-direction: column;
+  
+  width: 300px;
+}
+.wrapper{
+  display: flex;
+  justify-content: center;
+}
+input{
+  margin: 5px;
+}
+

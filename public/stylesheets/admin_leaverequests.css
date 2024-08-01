@@ -1,0 +1,21 @@
+body{
+    
+    background-color: rgb(232,236,239);
+    font-family: 'Gilroy';
+    
+}
+
+.leaves{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+#wrappper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+}
+#leave-status{
+    align-self: center;
+    width: min-content;
+}

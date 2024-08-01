@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/admin_employees.css">
+    <script src="../javascripts/admin_employees.js"></script>
+    <style>
+        .btn2{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(221, 149, 149);
+}
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; margin: 20px;">
+            <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                <h2>All Employees :</h2>
+                <a class="btn2" href="/profile">Profile</a>
+            </div>
+            <div class="employees-data">
+                <h3>Username</h3>
+                <h3>Email</h3>
+                <h3>Designation</h3>
+                <h3>Contact</h3> 
+                <h3>Department</h3>
+                <h3>Update</h3>
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="employees" >
+                <% employees.forEach((employee) => { %>
+                    <div class="employees-data">
+                    <h3><span id="user"><%= employee.username %></span></h3>
+                    <h3><%= employee.email %></h3>
+                    <h3><%= employee.designation %></h3>
+                    <h3><%= employee.contact %></h3>
+                    <h3><%= employee.department %></h3>
+                    <h3><button class="delete_button1">Delete</button></h3>
+                    </div>
+                <% }) %>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    
+</body>
+</html>

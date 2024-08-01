@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+          background-color: rgb(232, 236, 239);
+          font-family: 'Gilroy';
+          margin: 30px;
+          font-size: large;
+      }
+      #attendanceTable td, #attendanceTable th {
+    padding: 10px; /* Adjust the value as needed */
+}
+  </style>
+</head>
+<body>
+    <div>
+        <h2>Select Employee : </h2>
+        <div style="display: flex; gap: 20px;">
+            <label for="employee">Employee :</label>
+                    <select id="employee" name="employee">
+                        <option value="">Select Employee</option>
+                        <% allEmployees.forEach((employee)=>{ %>
+                            <option>
+                                <%= employee.username%>
+                            </option>
+                            <% }) %>
+                    </select>
+            <button onclick="sendEmp()">Check</button>        
+        </div>
+        
+    </div>
+
+    <div class="wrapper">
+           
+        <div id="membersList"></div>
+    </div>
+
+
+    <script>
+        function sendEmp() {
+            
+            let employee = document.getElementById("employee").value;
+            if(employee == ""){
+                alert("Please Select Employee");
+            }
+            else{
+
+
+            fetch('http://localhost:3000/findAtt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ employee: employee })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Ensure JSON parsing
+                })
+                .then(data => {
+                    displayMembers(data.attendence);
+                    console.log(data.attendence);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            }
+            
+        }
+
+
+        function displayMembers(attendances) {
+    const membersList = document.getElementById('membersList');
+    membersList.innerHTML = ''; // Clear any existing content
+
+    if (attendances && attendances.length > 0) {
+        // Create the table element
+        let table = document.createElement('table');
+        table.id = 'attendanceTable';
+
+        // Create the table header
+        let header = table.createTHead();
+        let headerRow = header.insertRow(0);
+        let headers = ['Date', 'Login', 'Logout'];
+        headers.forEach((headerText, index) => {
+            let th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+
+        // Create the table body
+        let tbody = document.createElement('tbody');
+        attendances.forEach(attendance => {
+            let row = tbody.insertRow();
+            // row.insertCell(0).textContent = attendance.employeeName;
+            row.insertCell(0).textContent = attendance.date;
+            row.insertCell(1).textContent = attendance.login;
+            row.insertCell(2).textContent = attendance.logout;
+        });
+
+        table.appendChild(tbody);
+        membersList.appendChild(table);
+    } else {
+        membersList.textContent = 'No attendance records available';
+    }
+}
+    </script>
+    </body>
+    
+</html>

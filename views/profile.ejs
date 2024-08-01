@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/profile.css">
+    <script src="../javascripts/profile.js"></script>
+    <style>
+        .notice1{
+            padding-left: 20px;
+            line-height: 20px;
+        }
+        .notice1 h2{
+            margin-bottom: 0;
+        }
+        .notice1 p{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div style="height: 80px; width: 100px; overflow: hidden;">
+                <img src="../images/logo.png" alt="EAD_logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <div class="two">
+                <div class="time">
+                    <p>
+                        <%= login_time%>
+                            </>
+                </div>
+
+                <% if(employee.username=="admin" || employee.designation=="Manager"){%>
+                    <div class="btn2">
+                        <a href="/admin">
+                            <p id="text">Admin Panel</p>
+                        </a>
+                    </div>
+                    <%}%>
+
+                        <div class="btn">
+                            <a href="/logout" class="logout">Logout</a>
+                        </div>
+            </div>
+
+        </div>
+
+        <hr>
+        <div class="content">
+            <div>
+                <div>
+                    <h3>Hii <%= employee.username%>&nbsp;!</h3>
+                    <h1>Welcome</h1>
+                </div>
+
+                <div class="boxes">
+                    <div>
+                        <div class="div1">
+                            <a href="/leave">Apply for leave</a>
+                        </div>
+                        <div class="div1 clr3 boxes1">
+                            <a href="/tasks">Assign a Task</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="div1 clr">
+                            <a href="/attendence">Attendence</a>
+                        </div>
+                        <% if(employee.username=="admin" || employee.designation=="Manager" ){ %>
+                            <div class="div1 clr4 boxes1">
+                                <a href="/project">Create Project</a>
+                            </div>
+                            <% } %>
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="gm">
+                    <h1>Notices</h1>
+                </div>
+                <div>
+                    <div class="boxes">
+                        <div class="notice-board">
+
+                            <% notice.forEach((notice)=>{ %>
+                                <div class="notice1">
+                                    <h2><%= notice.Heading %></h2>
+                                    <p><%= notice.Desc %></>
+                                </div>
+                            <% }) %>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <hr>
+        <h2 class="heading">
+            <h1>Leaves Applied</h1>
+        </h2>
+        <div class="leaves">
+            <div class="leaves-head">
+                <h3>Leave Id</h3>
+                <h3>Start Date</h3>
+                <h3>End Date</h3>
+                <h3>Reason</h3>
+                <h3>Employee</h3>
+                <h3>Status</h3>
+                <h3>Update</h3>
+            </div>
+            <% leave.forEach(function(leave){ %>
+                <div class="leaves1">
+                    <h3><span id="leave_num">
+                            <%=leave.leaveNumber%>
+                        </span>
+                    </h3>
+                    <h3>
+                        <%=leave.startDate%>
+                    </h3>
+                    <h3>
+                        <%=leave.enddate%>
+                    </h3>
+                    <h3>
+                        <%=leave.Reason%>
+                    </h3>
+                    <h3 id="username1"><span id="username">
+                            <%=leave.employeeName%>
+                        </span>
+                    </h3>
+                    <h3>
+                        <%=leave.status%>
+                    </h3>
+                    <h3><button class="delete_button">Delete</button></h3>
+                </div>
+
+
+                <% })%>
+
+        </div>
+
+        <br>
+        <hr>
+        <div style="margin-bottom: 100px;">
+            <h2 class="heading">
+                <h1>Tasks Assigned</h1>
+            </h2>
+            <div class="task-head">
+                <h3>Task Id</h3>
+                <h3>Name</h3>
+                <h3>Start Date</h3>
+                <h3>End Date</h3>
+                <h3>Project</h3>
+                <h3>Employee</h3>
+                <h3>Priority</h3>
+                <h3>Status</h3>
+                <h3>Update</h3>
+            </div>
+            <div class="leaves">
+                <% tasksall.forEach(function(taska){ %>
+                    <div class="task1">
+                        <h3><span id="username">
+                                <%=taska.taskNumber%>
+                            </span>
+                        </h3>
+                        <h3>
+                            <%=taska.taskName%>
+                        </h3>
+                        <h3>
+                            <%=taska.taskStartDate%>
+                        </h3>
+                        <h3>
+                            <%=taska.taskEndDate%>
+                        </h3>
+                        <h3>
+                            <%= taska.project ? taska.project.projectName : 'N/A' %>
+                        </h3>
+                        <h3>
+                            <%=taska.employeeName%>
+                        </h3>
+                        <h3>
+                            <%=taska.priority%>
+                        </h3>
+                        <h3>
+                            <%=taska.status%>
+                        </h3>
+                        <div id="task-status1">
+                            <select name="task-status" id="task-status">
+                                <option value="Assigned">Assigned</option>
+                                <option value="W/P">W/P</option>
+                                <option value="Done">Done</option>
+                            </select>
+                            <button class="save_button">Save</button>
+                        </div>
+                    </div>
+    
+                    <% })%>
+    
+    
+            </div>
+        </div>
+        
+    </div>
+
+
+    </div>
+
+</body>
+
+</html>

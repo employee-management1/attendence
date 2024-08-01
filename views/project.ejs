@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/project.css">
+
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content label {
+            display: block;
+            margin-top: 10px;
+        }
+        /* .dropdown:hover .dropdown-content {
+            display: block;
+        } */
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <form action="/createProject" method="post">
+            <div class="leave-form" style="display: flex; gap: 15px;">
+                <div class="inner">
+                    <label for="start">Project Name :</label>
+                    <input type="text" name="projectName" id="projectName">
+                </div>
+               <div class="inner">
+                <label for="date">Start Date : </label>
+                <input type="date" name="startDate" id="startDate">
+               </div>
+               <div class="inner">
+                <label for="date">End Date : </label>
+                <input type="date" name="endDate" id="endDate">
+               </div>
+                
+                <div class="inner"> 
+                    <label for="manager">Manager :</label>
+                    <select id="manager" name="manager">
+                        <option value="">Select Manager</option>
+                        <% employees.forEach((employee)=>{ %>
+                            <option>
+                                <%= employee.username%>
+                            </option>
+                            <% }) %>
+                    </select>
+                </div>
+                <div class="dropdown inner">
+                    <label for="date" style="margin-bottom: 5px;">Members : </label>
+                    <div class="btns">
+                        
+                        <button id="sel" class="sm-btn" onclick="showMembers(event)">Select</button>
+                    <button class="sm-btn" onclick="getSelectedMembers(event)">Confirm</button>
+                    </div>
+                    
+                    <div id="mem" class="dropdown-content">
+                        <% allEmployees.forEach((employee)=> { %>
+                            <label><input type="checkbox" name="members" value="<%= employee.username%>">
+                                <%=employee.username %>
+                            </label>
+                        <% })%>
+                    </div>
+                </div>
+                <button type="submit" class="submit" style="height: 35px"><div style="font-family: Gilroy; font-size: large;">Submit</div></button>
+                <a href="/profile">Back</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function showMembers(event) {
+            event.preventDefault();
+            var dropdown = document.getElementById("mem");
+            if (dropdown.style.display === "none" || dropdown.style.display === "") {
+                dropdown.style.display = "block";
+            } else {
+                dropdown.style.display = "none";
+            }
+        }
+
+        // JavaScript to handle the dropdown behavior and collect selected values
+        document.addEventListener('click', function (event) {
+            var dropdown = document.querySelector('.dropdown-content');
+            var button = document.getElementById("sel");
+            if (!dropdown.contains(event.target) && event.target !== button) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function getSelectedMembers(event) {
+            event.preventDefault();
+            var checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+            var members = [];
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    members.push(checkbox.value);
+                }
+            });
+            console.log(members);
+        }
+    </script>
+</body>
+
+</html>

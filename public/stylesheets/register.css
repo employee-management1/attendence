@@ -1,0 +1,53 @@
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(232,236,239);
+    font-family: 'Gilroy';
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: fit-content;
+}
+
+.inner{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    background-color: rgb(201,183,235);
+    border-radius: 20px;
+    gap: 10px;
+    min-width: 300px;
+}
+
+input{
+    height: 30px;
+    margin: 5px;
+    border: none;
+}
+select{
+    height: 25px;
+    margin: 5px;
+}
+
+.submit{
+    cursor: pointer;
+    margin-top: 15px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    border: none;
+    width: 100%;
+}

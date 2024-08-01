@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+          background-color: rgb(232, 236, 239);
+          font-family: 'Gilroy';
+          margin: 15px;
+          font-size: medium;
+      }
+      .btn2{
+    width: 150px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(221, 149, 149);
+}
+  </style>
+</head>
+<body>
+    
+  <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+    <h2>Ongoing Projects :</h2>
+    <a class="btn2" href="/profile">Profile</a>
+</div>
+    <div class="wrapper">
+        <div class="each" style="display: grid; grid-template-columns: repeat(6, 1fr); ">
+            <h2>Name</h2>
+            <h2>Start Date</h2>
+            <h2>End Date</h2>
+            <h2>Manager</h2>
+            <h2>Members</h2>
+            <h2>Update</h2>
+        </div>
+        <hr>
+        
+            <% projects.forEach((project) => {%>
+                <div class="each2" style="display: grid; grid-template-columns: repeat(6, 1fr);">
+                <h3><span id="proj_name"><%= project.projectName %></span></h3>
+                <h3><%= project.startDate %></h3>
+                <h3><%= project.endDate %></h3>
+                <h3><%= project.manager %></h3>
+                <h3><%= project.members %></h3>
+                <h3><button class="delete_button2">Delete</button></h3>
+            </div>
+            <%})%>
+        
+        
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.delete_button2').forEach(button => {
+    button.addEventListener('click', function() {
+        
+        var parentDiv = this.closest('.each2');
+        var id = parentDiv.querySelector('#proj_name').innerText;
+        alert('Data updated successfully');
+      
+       
+        fetch('/deleteProject', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: id})
+          })
+          .then(response => {
+            if(response.ok){
+                alert("Data sent")
+            }
+          })
+          .then(result => {
+            if (result.success) {
+              alert('Data updated successfully');
+             
+            } else {
+              alert('Error updating data');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          })
+          window.location.reload();
+      });
+  });
+});
+    </script>
+</body>
+</html>

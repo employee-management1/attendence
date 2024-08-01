@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+          background-color: rgb(232, 236, 239);
+          font-family: 'Gilroy';
+          margin: 30px;
+          font-size: small;
+      }
+  </style>
+</head>
+<body>
+    <h2>All Projects :</h2>
+    <div class="wrapper">
+        <div class="each" style="display: grid; grid-template-columns: repeat(3, 1fr); ">
+            <h2>Date</h2>
+            <h2>Login</h2>
+            <h2>Logout</h2>
+        </div>
+        <hr>
+        
+            <% attendences.forEach((attendence) => {%>
+                <div class="each2" style="display: grid; grid-template-columns: repeat(3, 1fr);">
+                <h3><%= attendence.date %></h3>
+                <h3><%= attendence.login %></h3>
+                <h3><%= attendence.logout %></h3>
+            </div>
+            <%})%>
+        
+        
+    </div>
+
+    
+</html>
